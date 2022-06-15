@@ -1,0 +1,9 @@
+servers: [ 15, 217, 226, 235, 240, 241, 242, 243, 247 ]
+#servers: [ 236, 237, 244, 245 ]
+#servers: [ 15, 217, 226, 235, 236, 237, 240, 241, 242, 243, 244, 245, 247 ]
+data_servers: [ 217 ]
+password: <your password>
+#server_config:
+#    lab_247:
+#        user: realdoctor
+#        password: realdoctor185
