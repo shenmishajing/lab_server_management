@@ -4,10 +4,12 @@ compute_servers: [ 15, 226, 235, 240, 241, 242, 243, 247 ]
 data_servers: [ 217, 237 ]
 # all servers in use: [ 15, 217, 226, 235, 237, 240, 241, 242, 243, 247 ]
 # all servers: [ 15, 217, 226, 235, 236, 237, 240, 241, 242, 243, 244, 245, 247 ]
+data_dir_path:
+    217: data2
+    237: data
 
 default:
     password: <your password>
-#server_config:
-#    lab_247:
-#        user: realdoctor
-#        password: realdoctor185
+#lab_247:
+#    user: realdoctor
+#    password: realdoctor185
