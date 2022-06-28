@@ -1,4 +1,3 @@
 paramiko
 PyYAML
 scp
-jsonargparse[signatures,argcomplete]

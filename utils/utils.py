@@ -35,7 +35,7 @@ def get_ssh_params(hosts = None, ssh_config = None):
         if isinstance(host, str):
             res_hosts.append(host)
             param = lookup_params_from_system_host_keys(host, ssh_config)
-            if host in server_config and 'user' in server_config[host] and server_config[host]['user'] != param['user']:
+            if host in server_config and 'user' in server_config[host] and server_config[host]['user'] == param['user']:
                 param.update(server_config[host])
         elif isinstance(host, dict):
             res_hosts.append(host['hostname'])
@@ -44,8 +44,6 @@ def get_ssh_params(hosts = None, ssh_config = None):
             print(f'Unknown host type: {type(host)}, {host}')
             continue
 
-        if 'port' in param and param['port'] == '22':
-            del param['port']
         if 'username' not in param:
             param['username'] = param['user']
         if 'user' in param:
@@ -56,6 +54,7 @@ def get_ssh_params(hosts = None, ssh_config = None):
 
 def ssh_connect(**kwargs):
     ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh_client.load_system_host_keys()
     ssh_client.connect(**kwargs)
     return ssh_client

@@ -1,8 +1,12 @@
-servers: [ 15, 217, 226, 235, 240, 241, 242, 243, 247 ]
-#servers: [ 236, 237, 244, 245 ]
-#servers: [ 15, 217, 226, 235, 236, 237, 240, 241, 242, 243, 244, 245, 247 ]
-data_servers: [ 217 ]
-password: <your password>
+compute_servers: [ 15, 226, 235, 240, 241, 242, 243, 247 ]
+# all compute_servers: [ 15, 226, 235, 236, 240, 241, 242, 243, 244, 245, 247 ]
+# compute_servers can not used now: [ 236, 244, 245 ]
+data_servers: [ 217, 237 ]
+# all servers in use: [ 15, 217, 226, 235, 237, 240, 241, 242, 243, 247 ]
+# all servers: [ 15, 217, 226, 235, 236, 237, 240, 241, 242, 243, 244, 245, 247 ]
+
+default:
+    password: <your password>
 #server_config:
 #    lab_247:
 #        user: realdoctor

@@ -1,10 +1,30 @@
-## lab server management tools
+## 实验室服务器管理工具包
 
-### Requirements
+### 介绍
 
-- on every server, ensure that your account has been configured with the same password.
-- copy config/config.example.yaml to config/config.yaml, and set <your password> part.
-- add following host to /etc/hosts
+本项目意在通过Python自动化脚本自动管理实验室的服务器。 本项目所有功能均可通过手动输入命令来完成。
+
+#### 服务器文档介绍
+
+见resources/睿医服务器.md
+
+第一个表主要关注IP，管理口，账号密码和端口。
+管理口的格式是ip登录账号/密码。直接大概这个ip chrome可能提示风险，直接在键盘上敲击"this is unsafe"（无输入框）就可以进入网页。
+一般表格里的账号都不能直接ssh，可以去机房接个屏幕登录，也可以打开管理口，找一下能找到开启终端的地方，在管理口里登录。
+另外，管理口里可以直接开关、重启服务器，很有用。
+
+### 使用前的准备
+
+#### 准备账号
+
+- 查看config/config.example.yaml文件，里面有现在可以使用的计算服务器与数据服务器。
+- 确保在每台服务器上都有账号（一般来说是每个人的所有账号名都是一致的，是名字的全拼），如果没有可以找之前的网管开账号（推荐）或者自己使用文档里的root账号创建。
+- 确保在每台服务器上都有sudo权限，如果没有可以找之前的网管开权限（推荐）或者自己使用文档里的root账号开权限。
+- [可选]将每台机器上的账号密码改成统一的，如果不是后面的步骤中要为密码不同的服务器单独配置。
+
+#### 配置hosts
+
+- 把下面的部分加入到 /etc/hosts 文件中
 
 ```hosts
 192.168.0.15 lab_15
@@ -22,7 +42,11 @@
 192.168.0.247 lab_247
 ```
 
-- add following to ~/.ssh/config
+#### 配置.ssh/config
+
+- 把下面的部分加入到 ~/.ssh/config 文件中，如果没有该文件，请先手动创建
+
+[注意]请将<your username>部分，换成你自己的用户名（通常是你名字的全拼）
 
 ```
 Host lab_217 lab_235 lab_237 lab_244 lab_245
@@ -37,21 +61,27 @@ Host lab_15 lab_226 lab_240 lab_241 lab_242 lab_243 lab_247
     User <your username>
 ```
 
-### Installation
+#### 配置config/config.yaml
 
-- create a python env by conda or venv
-- install requirements
+- 将config文件夹中的config/config.example.yaml文件复制一份，改名为config/config.yaml。
+- 将<your password>部分改为你的账号密码。
+- 如果有部分服务器上，你想要使用不同的账号/密码/端口等，可以想注释中的那样单独配置。
+
+### 安装
+
+- [可选，推荐]创建一个新的conda或venv环境。
+- 安装要求。
 
 ```bash
 pip install -r requirements.txt
 ```
 
-- install this.
+- 安装本项目。
 
 ```bash
 pip install -v -e .
 ```
 
-### Feature
+### 功能
 
-see py file under tools directory.
+见tools文件夹下的所有py文件。
