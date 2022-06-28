@@ -1,9 +1,23 @@
 import os
+import re
 
 import paramiko
 from scp import SCPClient
 
 from config import server_config
+
+cmd_finish_flag = ['# ', '$ ', '? ', '% ']
+ansi_escape = re.compile(r'''
+            \x1B  # ESC
+            (?:   # 7-bit C1 Fe (except CSI)
+            [@-Z\\-_]
+            |     # or [ for CSI, followed by a control sequence
+            \[
+            [0-?]*  # Parameter bytes
+            [ -/]*  # Intermediate bytes
+            [@-~]   # Final byte
+        )
+    ''', re.VERBOSE)
 
 
 def get_ssh_config(config_path = '~/.ssh/config'):
@@ -78,45 +92,49 @@ def get_scp_clients(ssh_clients = None, hosts = None):
 
 
 def get_output_from_shell(shell, show_output = True):
-    shell.settimeout(0.5)
+    shell.settimeout(1)
     res = ''
     while True:
         try:
-            resp = shell.recv(1024).decode('utf-8')
+            resp = ansi_escape.sub('', shell.recv(1024 * 1024).decode('utf-8'))
             if show_output:
                 print(resp, end = '')
             res += resp
+            for f in cmd_finish_flag:
+                if resp.endswith(f):
+                    return res
         except Exception:
             break
     return res
 
 
 def run_one_cmd_on_shell(shell, cmd, show_output = True):
-    shell.send(cmd + '\n')
+    if not cmd.endswith('\n'):
+        cmd += '\n'
+    shell.send(cmd)
     return get_output_from_shell(shell, show_output)
 
 
-def run_ssh_cmd(cmds, hosts = None, root = True, show_output = True):
+def run_ssh_cmd(cmds, hosts = None, root = True, **kwargs):
     res = {}
     if not isinstance(cmds, list):
         cmds = [cmds]
     hosts, params = get_ssh_params(hosts)
     for host, param in zip(hosts, params):
         try:
-            print(f'run cmd on {host}')
+            print(f'\nrun cmd on {host}')
             ssh_client = ssh_connect(**param)
             shell = ssh_client.invoke_shell()
-            get_output_from_shell(shell, show_output = show_output)
+            run_one_cmd_on_shell(shell, 'bash', show_output = False)
             if root and param['username'] != 'root' and cmds:
                 if 'password' in server_config[host]:
-                    run_one_cmd_on_shell(shell, 'sudo su', show_output = show_output)
-                    run_one_cmd_on_shell(shell, server_config[host]['password'], show_output = show_output)
+                    run_one_cmd_on_shell(shell, f'sudo su\n{server_config[host]["password"]}', **kwargs)
                 else:
                     print(f'No password found for user root')
             for cmd in cmds:
                 if host not in res:
                     res[host] = []
-                res[host].append(run_one_cmd_on_shell(shell, cmd, show_output = show_output))
+                res[host].append(run_one_cmd_on_shell(shell, cmd, **kwargs))
             ssh_client.close()
         except Exception as e:
             print(host, e)
