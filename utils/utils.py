@@ -3,7 +3,6 @@ import re
 import time
 
 import paramiko
-from scp import SCPClient
 
 from config import server_config
 
@@ -88,9 +87,9 @@ def get_scp_clients(ssh_clients = None, hosts = None):
     if ssh_clients is None:
         ssh_clients = get_ssh_clients(hosts)
     if not isinstance(ssh_clients, list):
-        return SCPClient(ssh_clients.get_transport())
+        return paramiko.SFTPClient.from_transport(ssh_clients.get_transport())
     else:
-        return [SCPClient(ssh_client.get_transport()) for ssh_client in ssh_clients]
+        return [paramiko.SFTPClient.from_transport(ssh_client.get_transport()) for ssh_client in ssh_clients]
 
 
 def get_output_from_shell(shell, show_output = True, start_cmd = None, debug = False):
