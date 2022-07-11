@@ -1,3 +1,1 @@
-paramiko
-PyYAML
-scp
+-r requirements/runtime.txt
