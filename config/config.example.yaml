@@ -9,7 +9,13 @@ data_dir_path:
     237: data
 
 default:
+    user: <your username>
     password: <your password>
-#lab_247:
-#    user: realdoctor
-#    password: realdoctor185
+
+port_config:
+    18518: [ 15, 226, 240, 241, 242, 243, 247 ]
+
+#server_config:
+#    247:
+#        user: realdoctor
+#        password: realdoctor185

@@ -33,7 +33,7 @@ def add_users(user_names, servers = None, admin_users = False, user_passwd = 'Ha
         servers = server_config['servers']
     for server in servers:
         if isinstance(server, int):
-            server = f'lab_{server}'
+            server = f'192.168.0.{server}'
         cmd = []
         is_data_server = server in server_config['data_servers']
         for user_name, admin_user in zip(user_names, admin_users):

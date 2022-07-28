@@ -19,7 +19,7 @@ def do_something_on_users(func):
 
         for server in servers:
             if isinstance(server, int):
-                server = f'lab_{server}'
+                server = f'192.168.0.{server}'
             cmd = []
             for user_name in user_names:
                 if user_name in users_to_host and server in users_to_host[user_name]:

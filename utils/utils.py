@@ -45,12 +45,13 @@ def get_ssh_params(hosts = None, ssh_config = None):
     params = []
     for host in hosts:
         if isinstance(host, int):
-            host = f'lab_{host}'
+            host = f'192.168.0.{host}'
 
         if isinstance(host, str):
             res_hosts.append(host)
             param = lookup_params_from_system_host_keys(host, ssh_config)
-            if host in server_config and 'user' in server_config[host] and server_config[host]['user'] == param['user']:
+            if host in server_config and 'user' in server_config[host] and (
+                    'user' not in param or server_config[host]['user'] == param['user']):
                 param.update(server_config[host])
         elif isinstance(host, dict):
             res_hosts.append(host['hostname'])
