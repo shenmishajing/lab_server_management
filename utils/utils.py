@@ -22,7 +22,10 @@ ansi_escape = re.compile(r'''
 
 
 def get_ssh_config(config_path = '~/.ssh/config'):
-    return paramiko.SSHConfig.from_path(os.path.expanduser(config_path))
+    if os.path.exists(os.path.expanduser(config_path)):
+        return paramiko.SSHConfig.from_path(os.path.expanduser(config_path))
+    else:
+        return paramiko.SSHConfig.from_text('')
 
 
 def lookup_params_from_system_host_keys(host, ssh_config = None):
