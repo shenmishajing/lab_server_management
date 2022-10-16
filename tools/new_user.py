@@ -41,10 +41,9 @@ def add_users(user_names, servers = None, admin_users = False, user_passwd = 'Ha
 
             if (user_name not in users_to_host or server not in users_to_host[user_name]) and (admin_user or not is_data_server):
                 cmd.extend([
-                    f'useradd {user_name} -s /bin/bash -d /home/{user_name} -m',
-                    f'echo {user_name}:{user_passwd} | chpasswd',
-                    f'usermod -u {user_id} {user_name}',
-                    f'groupmod -g {group_id} {user_name}'
+                    f'useradd {user_name} -u {user_id} -s /bin/bash -d /data2/{user_name} -m',
+                    f'groupmod -g {group_id} {user_name}',
+                    f'echo {user_name}:{user_passwd} | chpasswd'
                 ])
                 if request_change_password:
                     cmd += [f'chage -d0 {user_name}']
