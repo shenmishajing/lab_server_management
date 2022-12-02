@@ -13,7 +13,7 @@ default:
     password: <your password>
 
 port_config:
-    18518: [ 15, 226, 240, 241, 242, 243, 247 ]
+    18518: [ 15, 240, 241, 242, 243, 247, 248 ]
 
 #server_config:
 #    247:
