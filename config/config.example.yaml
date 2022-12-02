@@ -1,4 +1,4 @@
-compute_servers: [ 15, 226, 235, 240, 241, 242, 243, 247 ]
+compute_servers: [ 15, 235, 240, 241, 242, 243, 247, 248 ]
 # all compute_servers: [ 15, 226, 235, 236, 240, 241, 242, 243, 244, 245, 247 ]
 # compute_servers can not used now: [ 236, 244, 245 ]
 data_servers: [ 217, 237 ]

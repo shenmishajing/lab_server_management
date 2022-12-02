@@ -60,8 +60,9 @@ def _get_all_users(cache_path = 'cache/users.json', users = None):
         'host_to_users': host_to_users,
         'all_users': users
     }
-    if not os.path.exists('../cache'):
-        os.mkdir('../cache')
+    cache_dir = os.path.dirname(cache_path)
+    if not os.path.exists(cache_dir):
+        os.mkdir(cache_dir)
     json.dump(user_dict, open(cache_path, 'w'), indent = 4)
     return res_users, already_used_ids, users_to_host
 
