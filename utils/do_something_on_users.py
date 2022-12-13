@@ -24,8 +24,12 @@ def do_something_on_users(func):
             for user_name in user_names:
                 if user_name in users_to_host and server in users_to_host[user_name]:
                     cur_kwarg = copy.deepcopy(kwargs)
-                    cur_kwarg.setdefault('user_id', users[user_name])
-                    cmd.extend(func(user_name = user_name, server = server, **cur_kwarg))
+                    cur_kwarg['user_name'] = user_name
+                    cur_kwarg['server'] = server
+                    if user_name in users:
+                        cur_kwarg.setdefault('cur_user_id', users[user_name][0])
+                        cur_kwarg.setdefault('cur_group_id', users[user_name][1])
+                    cmd.extend(func(**cur_kwarg))
             run_ssh_cmd(cmd, server)
 
     return wrapper

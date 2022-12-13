@@ -1,7 +1,21 @@
-from utils import run_ssh_cmd
+import argparse
+from utils import run_ssh_cmd, launcher
 
 
-def del_users(user_names):
+def parser_builder():
+    parser = argparse.ArgumentParser(description="delete ovpn users")
+    parser.add_argument(
+        "--user-names",
+        required=True,
+        type=str,
+        nargs="+",
+        help="user names, can be a list",
+    )
+    return parser
+
+
+@launcher(parser_builder=parser_builder)
+def main(user_names):
     if not isinstance(user_names, list):
         user_names = [user_names]
 
@@ -10,9 +24,5 @@ def del_users(user_names):
     run_ssh_cmd(cmd, server)
 
 
-def main():
-    del_users('intern10')
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
