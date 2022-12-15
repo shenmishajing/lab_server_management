@@ -7,7 +7,7 @@ def parser_builder():
     return parser
 
 
-@launcher(parser_builder=parser_builder)
+@launcher(parser_builder)
 def main():
     get_all_users()
 

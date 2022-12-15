@@ -12,7 +12,7 @@ def parser_builder():
     )
     parser.add_argument(
         "--servers",
-        type=str,
+        type=int,
         default=None,
         nargs="+",
         help="servers ip address (only last part), default all compute servers",
@@ -37,7 +37,7 @@ def parser_builder():
     return parser
 
 
-@launcher(parser_builder=parser_builder)
+@launcher(parser_builder)
 @do_something_on_users
 def main(
     user_name,
