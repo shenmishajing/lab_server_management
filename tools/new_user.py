@@ -27,6 +27,11 @@ def parser_builder():
         help="servers ip address (only last part), default all compute servers",
     )
     parser.add_argument(
+        "--use-cache",
+        action="store_true",
+        help="if set, try to use cached users.json file instead of get a new one, default is False",
+    )
+    parser.add_argument(
         "--admin-users",
         action="store_true",
         help="if set, create all users as admin users, default is False",
@@ -40,12 +45,7 @@ def parser_builder():
     parser.add_argument(
         "--request-change-password",
         action="store_false",
-        help="if set, require user to change passwd after first login, default is True",
-    )
-    parser.add_argument(
-        "--use-cache",
-        action="store_true",
-        help="if set, try to use cached users.json file instead of get a new one, default is False",
+        help="require user to change passwd after first login. if use, set this flag to False, default is True",
     )
     parser.add_argument(
         "--user-id-start",

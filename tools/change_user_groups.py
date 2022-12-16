@@ -32,7 +32,7 @@ def parser_builder():
     parser.add_argument(
         "--is-add",
         action="store_false",
-        help="if set, add user to group instead of set, default is True",
+        help="add user to group instead of set. if use, set this flag to False, default is True",
     )
     return parser
 

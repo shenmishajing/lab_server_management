@@ -23,6 +23,12 @@ def parser_builder():
         action="store_true",
         help="if set, try to use cached users.json file instead of get a new one, default is False",
     )
+    parser.add_argument(
+        "--user-passwd",
+        type=str,
+        default="HangZhou2022",
+        help="user passwd, default HangZhou2022",
+    )
     return parser
 
 
