@@ -1,7 +1,7 @@
 import argparse
 
 from config import server_config
-from utils import run_ssh_cmd, get_all_users, launcher
+from utils import get_all_users, launcher, run_ssh_cmd
 
 
 def get_next_id(used_ids, start_id=2300, end_id=65535):
@@ -37,6 +37,12 @@ def parser_builder():
         help="if set, create all users as admin users, default is False",
     )
     parser.add_argument(
+        "--home-dir",
+        type=str,
+        default="data2",
+        help="home dir, default data2",
+    )
+    parser.add_argument(
         "--user-passwd",
         type=str,
         default="HangZhou2022",
@@ -66,6 +72,7 @@ def parser_builder():
 def main(
     user_names,
     servers=None,
+    home_dir="data2",
     admin_users=False,
     user_passwd="HangZhou2022",
     request_change_password=True,
@@ -104,7 +111,7 @@ def main(
             if user_name not in users_to_host or server not in users_to_host[user_name]:
                 cmd.extend(
                     [
-                        f"useradd {user_name} -u {user_id} -s /bin/bash -d /data2/{user_name} -m",
+                        f"useradd {user_name} -u {user_id} -s /bin/bash -d /{home_dir}/{user_name} -m",
                         f"groupmod -g {group_id} {user_name}",
                         f"echo {user_name}:{user_passwd} | chpasswd",
                     ]
