@@ -1,5 +1,6 @@
 import argparse
-from utils import run_ssh_cmd, launcher
+
+from utils import launcher, run_ssh_cmd
 
 
 def parser_builder():
@@ -20,7 +21,7 @@ def main(user_names):
         user_names = [user_names]
 
     server = 235
-    cmd = [f'sh /data/openvpn_script/del_vpn_user.sh {" ".join(user_names)}']
+    cmd = [f'sh /etc/openvpn/client/del_vpn_user.sh {" ".join(user_names)}']
     run_ssh_cmd(cmd, server)
 
 
