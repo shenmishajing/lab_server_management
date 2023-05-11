@@ -28,7 +28,6 @@ def main(user_names, download_zip):
 
     server = 235
     cmd = [
-        f'sh /etc/openvpn/client/del_vpn_user.sh {" ".join(user_names)}',
         f'sh /etc/openvpn/client/vpn_user.sh {" ".join(user_names)}',
     ]
     run_ssh_cmd(cmd, server)
