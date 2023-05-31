@@ -21,7 +21,7 @@ def main(user_names):
         user_names = [user_names]
 
     server = 235
-    cmd = [f'sh bash /etc/openvpn/client/del_vpn_user.sh {" ".join(user_names)}']
+    cmd = [f'sh /etc/openvpn/client/del_vpn_user.sh {" ".join(user_names)}']
     run_ssh_cmd(cmd, server)
 
 
