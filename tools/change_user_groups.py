@@ -1,4 +1,5 @@
 import argparse
+
 from utils import do_something_on_users, launcher
 
 
@@ -30,17 +31,17 @@ def parser_builder():
         help="user group to set, default sudo",
     )
     parser.add_argument(
-        "--is-add",
-        action="store_false",
-        help="add user to group instead of set. if use, set this flag to False, default is True",
+        "--is-delete",
+        action="store_true",
+        help="delete user from group instead of add, default is add",
     )
     return parser
 
 
 @launcher(parser_builder)
 @do_something_on_users
-def main(user_name, user_group="sudo", is_add=True, **kwargs):
-    return [f'gpasswd -{"a" if is_add else "d"} {user_name} {user_group}']
+def main(user_name, user_group="sudo", is_delete=False, **kwargs):
+    return [f'gpasswd -{"a" if is_delete else "d"} {user_name} {user_group}']
 
 
 if __name__ == "__main__":
