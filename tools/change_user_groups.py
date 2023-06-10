@@ -41,7 +41,7 @@ def parser_builder():
 @launcher(parser_builder)
 @do_something_on_users
 def main(user_name, user_group="sudo", is_delete=False, **kwargs):
-    return [f'gpasswd -{"a" if is_delete else "d"} {user_name} {user_group}']
+    return [f'gpasswd -{"d" if is_delete else "a"} {user_name} {user_group}']
 
 
 if __name__ == "__main__":
